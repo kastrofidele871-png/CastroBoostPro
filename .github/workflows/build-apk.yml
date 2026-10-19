@@ -5,28 +5,26 @@ on:
     branches: [ principal, main, master ]
 
 jobs:
-  build:
+  construire:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Code de vérification
         uses: actions/checkout@v4
 
-      - name: Setup Java 17
+      - name: Installation de Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Code de validation de commande
+        run: chmod +x ./android/gradlew
 
-      - name: Build APK Castro Boost Pro
+      - name: Créer un fichier APK Castro Boost Pro
         working-directory: ./android
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload Castro Boost Pro APK
+      - name: Télécharger l'APK de Castro Boost Pro
         uses: actions/upload-artifact@v4
         with:
           name: Castro-Boost-Pro-APK
